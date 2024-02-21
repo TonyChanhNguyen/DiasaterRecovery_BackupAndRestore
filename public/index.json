@@ -1,0 +1,141 @@
+[
+{
+	"uri": "/",
+	"title": "Backup and Restore",
+	"tags": [],
+	"description": "",
+	"content": "Backup and Restore Overview In this lab, we will deploy application in a region and then use AWS Backup and EC2 AMIs to create a backup of our store in another region. We will demonstrate DR by simulating a disaster in the primary region and recovering application in the Backup Region. This module takes about 90 minutes to complete.\nContent  Introduce Prerequisite Backup Resource Copy to Secondary Verify Website Failover to Secondary Clean up  "
+},
+{
+	"uri": "/6-failovertosecondary/6.1-ec2/",
+	"title": "EC2",
+	"tags": [],
+	"description": "",
+	"content": "Launch an EC2 instance from AMI (Amazon Machine Image) 1 Click EC2 to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Click AMIs\n3 Verify the status of BackupAndRestoreImage is Available\n4 Select BackupAndRestoreImage. Click Launch instance from AMI button\n5 Select t2.micro instance type, then click Next: Configure Instance Details button\n6 Select BackupAndRestore-S3InstanceProfile-xxxx as the IAM Role, then click Next: Add Storage button\n7 Click Next: Add tags button\n8 Add Name as the Key and BackupAndRestoreSecondaryas the Value, then click Next: Configure Security Group button\n9 Select Create a new security group and enter backupandrestore-ap-southeast-ec2-SG as the Security group name and Description. Add rules same as below by clicking the Add Rule button. Then click Review and Launch button\n10 Click launch button\n11 Select Proceed without a key pair, enable I acknowledge that without a key pair,… checkbox, then click Lauch Instances button\nCopy Public IPv4 DNS of the instance. We will use it for next steps\n\r"
+},
+{
+	"uri": "/1-introduce/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "Sample application is Unishop. It is a Spring Boot Java Application connect to MySQL database with a frontend written by Bootstrap. This application is launch in a EC2 Instance (t3.small) with a dedicated VPC using a Public Subnet. Note that this is not the ideal infrastructure architecture for running highly availability production applications but suffices for this workshop.\nTo configure a infrastructure and deploy the application, we will use Cloudformation. Cloudformation is an easy way to speed up cloud provisioning with infrastructure as code.\nWe will initially deploy Unishop to the ap-southeast-1 AWS Region and verify functionality. Then we will use an AWS EC2 AMI and AWS Backup for creating copies of application server and database in ap-southeast-2 region. Finally, we will use the copies for creating and testing a fully functional application in ap-southeast-2 region. "
+},
+{
+	"uri": "/3-backupresource/3.1-rds/",
+	"title": "RDS",
+	"tags": [],
+	"description": "",
+	"content": "Backup RDS database 1 Click AWS Backup to navigate to the dashboard AWS Backup at Singapore (ap-southeast-1) region\n2 Click Protected resources, then cilck Create an on-demand backup button\n3 Select RDS as the Resource type, then select unishopappv1dbbackupandrestore (RDS Database which was created by Cloudformation at Region chính) as the Database name. Click the Create on-demand backup button\nIf you see error, please REPEAT from step 1.1 to 1.3 above and make sure you start from step 1.1\n\r4 RDS database backup will be created after\nThis process will take at least 10 minutes to finish\n\r5 After backup process finish, we will get the result same as below\n"
+},
+{
+	"uri": "/4-copytosecondregion/4.1-rds/",
+	"title": "RDS",
+	"tags": [],
+	"description": "",
+	"content": "Copy RDS Backup 1 Click AWS Backup to navigate to the dashboard in Singapore (ap-southeast-1) region\n2 Click Backup Vaults, then click Default 3 At Backups, select backup. Then click Copy as the Actions If you don\u0026rsquo;t see your backup, check the status of Backup Job. Click Jobs, then click Backup Jobs. Verify Status of your backup is Completed \r4 Select Sydney (ap-southeast-2) as the Copy to destination, then click Copy button 5 The process of copying backup from Singapore (ap-southeast-1) region to Sydney (ap-southeast-2) region is executing This process will take about 10 minutes to complete\n\r6 To check the result, we do the following:\n Navigate to AWS Backup in Sydney (ap-southeast-2) region At Backup vaults, select Backup vaults as Default  At Backups we will see the backup which was copied from Singapore (ap-southeast-1) region   "
+},
+{
+	"uri": "/2-pre-requisites/2.1-s3-access/",
+	"title": "S3 Access",
+	"tags": [],
+	"description": "",
+	"content": "1 Click S3 to nagative to dashboard S3\n2 Click the Block Public Access settings for this account link\nIf you can not find Block Public Access settings for this account in S3 dashboard, click the left conner of the screen \r3 If you see Block all public access is On, let\u0026rsquo;s click Edit button\nIf you see Block all public access is Off, you can skip steps below and begin Primary Region \r4 Disable Block Public Access settings for this account checkbox include children, then click Save change button for saving\n5 Enter confirm and click confirm button to confirm\n6 After that you will get the result same as below, Block Public Access settings for this account was Disable\n"
+},
+{
+	"uri": "/3-backupresource/3.2-ec2/",
+	"title": "EC2",
+	"tags": [],
+	"description": "",
+	"content": "Create an AMI (Amazon Machine Image) If EC2 instance contain apllication data, it would be necessary to schedule recurring backups to meet target RPO. AWS Backup provides this functionality through a dashboard that make it simple to audit backup and restore activity across AWS services. Sinces our instance contain no data, only code, we will create a backup on time.\nReoccurring backups are necessary for a production application every time a change occurs to the EC2 instance.\n1 Click EC2 to navigate to the EC2 dashboard in Singapore (ap-southeast-1) region\n2 Click Instances (running)\n3 Select UniShopAppV1EC2BackupAndRestore. Click Action -\u0026gt; Images and Templates -\u0026gt; Create image\n4 Enter BackupAndRestoreImage as the Image Name, then click Next button to create\n5 Select AMI and see AMI creating\n6 After AMI was created successfully, we will get the result same as below\n"
+},
+{
+	"uri": "/4-copytosecondregion/4.2-ec2/",
+	"title": "EC2",
+	"tags": [],
+	"description": "",
+	"content": "Copy EC2 AMI (Amazon Machine Image) 1 Click EC2 to navigate to the dashboard in Singapore (ap-southeast-1) region\n2 Click AMIs\n3 Verify the status of BackupAndRestoreImagebackup is Available 4 Click BackupAndRestoreImage. Click Copy AMI as the Actions 5 Select Sydney (ap-southeast-2 as the Destination region, then click Copy AMI button 6 EC2 AMI copying process will be executed 7 To check the result, we do the following:\n Navigate to EC2 in Sydney (ap-southeast-2) region Click AMIs and check AMI which had been copied from Singapore (ap-southeast-1) region   "
+},
+{
+	"uri": "/2-pre-requisites/",
+	"title": "Pre-requisites ",
+	"tags": [],
+	"description": "",
+	"content": "If you\u0026rsquo;re using your personal AWS account, you will incur costs for the resources deployed in this workshop. After completing the workshop, remember to complete Clean up section to remove any unnecessary AWS resources.\n"
+},
+{
+	"uri": "/2-pre-requisites/2.2-primaryregion/",
+	"title": "Primary Region",
+	"tags": [],
+	"description": "",
+	"content": "Lauch a Amazon CloudFormation Template 1 Create an application in primary region Singapore (ap-southeast-1) by lauching this CloudFormation Template\n2 Click the Next button\n3 Click the Next button\nSet LatestAmiId as the default values\n\r4 Click the Next button\n5 Scroll down to the end of page, enable I acknowledge that AWS CloudFormation might create IAM resources with custom names checkbox, then click Create stack button\n6 Cloudformation is creating necessary resources\nThis process takes at least 15 minutes to finish\n\r7 After finishing you will get the result same as below\n8 To verify application that had been created, access S3 at Bucket we will see a bucket with prefix backupandrestore-uibucket-xxxx\n9 Select the bucket which had been created, scroll down to the end of Permission. Copy Bucket website endpoint of S3 Bucket\n10 Enter copied endpoint to any internet explorer . Then we will get the result same as below, The Unicorn Shop application had been created at Singapore (ap-southeast-1) region\n"
+},
+{
+	"uri": "/6-failovertosecondary/6.2-rds/",
+	"title": "RDS",
+	"tags": [],
+	"description": "",
+	"content": "Restore RDS database 1 Click AWS Backup to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Click Backup Vaults, then click Default\n3 At Backups, select backup. Then click Restore of Actions\nIf you don\u0026rsquo;t see your backup, check the status of Copy Job. Click AWS Backup to navigate to the dashboard in Singapore - (ap-southeast-1) region. Click Jobs, then click Copy jobs. Verify Status of backup is Completed\n\r4 At Settings, enter backupandrestore-secondary-region as the DB Instance Identifier. At Network \u0026amp; Security, select ap-southeast-1x as the Availability zone\n5 Click Restore backup\n6 The restoring RDS backup process is executing\nConfigure Security Group 1 Click VPC to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Click Security Groups, then click Create security group button\n3 At Basic details, enter backupandrestore-ap-southeast-rds-SG as the Security group name and Description\n4 At Inbound Rules, click Add rule button. Select Type as the MYSQL/Aurora. Select Source as the Custom and select backupandrestore-us-west-ec2-SG. This will allow the communication between your EC2 instance and your RDS instance. Then click Create security group button\nConfigure RDS 1 Click RDS to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Click DB Instances\n3 Click backupandrestore-secondary-region, then click Modify button\n\rRDS database must have Status is Available\n\r4 At Connectivity, select Security group is backupandrestore-ap-southeast-rds-SG. Then click Continue button\n5 Click Apply immediately then click Apply immediately button\n6 Click backupandrestore-secondary-region\nCopy Endpoint address and Port. We will use it for next steps.\n\r"
+},
+{
+	"uri": "/3-backupresource/",
+	"title": "Backup Resource",
+	"tags": [],
+	"description": "",
+	"content": "Now we are going to backup our resources\nWe will perform the following:\n Backup the RDS database Create an EC2 AMI (Amazon Machine Image) Create a new S3 UI bucket  We will create a backup plan for a production application and schedule recurring backups to meet target RPO.\nHowever, for this workshop, we will create a manual backup\n"
+},
+{
+	"uri": "/6-failovertosecondary/6.3-modifyapplication/",
+	"title": "Modify Application",
+	"tags": [],
+	"description": "",
+	"content": "EC2 1 Click EC2 to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Select BackupAndRestoreSecondary instance, then click Connect button\n3 Click Session Manager, then click Connect button\n4 After a second, a terminal will appear\n5 Let\u0026rsquo;s connect to RDS database in secondary reggion Sydney - (ap-southeast-2)\nsudo su ec2-user\rcd /home/ec2-user Replace backupandrestore-secondary-region.xxxx.us-west-1.rds.amazonaws.com with Endpoint address which was copied at RDS section\nsudo mysql -u UniShopAppV1User -P 3306 -pUniShopAppV1Password -h backupandrestore-secondary-region.xxxx.us-west-1.rds.amazonaws.com Enter show databases\nshow databases; You will see the results same as below:\n+--------------------+\r| Database |\r+--------------------+\r| information_schema |\r| mysql |\r| performance_schema |\r| sys |\r| unishop |\r+--------------------+\r5 rows in set (0.02 sec) Enter exit to come back to the terminal\nMySQL [(none)]\u0026gt; exit 6 Open unishopcfg.sh file to edit by nano or vi\nsudo nano unishopcfg.sh 7 Replace backupandrestore-secondary-region.xxxx.us-west-1.rds.amazonaws.com by Endpoint address you copied at RDS section. Replace AWS_DEFAULT_REGION into ap-southeast-2. Replace UI_RANDOM_NAME into name of S3 Bucket created in Sydney - (ap-southeast-2) region (end by -dr)\n#!/bin/bash\rexport Database=backupandrestore-secondary-region.ctd11hzme0gz.ap-southeast-2.rds.amazonaws.com\rexport DB_ENDPOINT=backupandrestore-secondary-region.ctd11hzme0gz.ap-southeast-2.rds.amazonaws.com\rexport AWS_DEFAULT_REGION=ap-southeast-2\rexport UI_RANDOM_NAME=backupandrestore-uibucket-xbo9p0akmbgb-dr Exit and save the changes After finishing, enter \u0026ldquo;Ctrl + X\u0026rdquo; -\u0026gt; \u0026ldquo;Y\u0026rdquo; -\u0026gt; \u0026ldquo;Enter\u0026rdquo; to save and exit\n\r8 Let\u0026rsquo;s use the source command to read and execute commands from unishopcfg.sh file\nsource unishopcfg.sh 9 Let\u0026rsquo;s copy the application files to the S3 bucket\nIf our S3 buckets contain application data then it would be necessary to schedule recurring backups to meet the target RPO. This could be done with Cross Region Replication. Since our bucket do not contain data, only code, we will restore the contents from the EC2 instance.\n\rsudo aws s3 cp /home/ec2-user/UniShopUI s3://$UI_RANDOM_NAME/ --recursive --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers 10 Restart the EC2 instance to apply changes\nsudo reboot Create application configuration file 1 Using any editor, Create a new file name config.json. Set the host property is EC2 public IPv4 DNS name copied at EC2 section, add (‘http://\u0026rsquo;) . Finally, set the region property is ap-southeast-2\n2 Finally, config.json should look similar to this example.\n{\r\u0026#34;host\u0026#34;: \u0026#34;http://ec2-XXX-XXX-XXX-XXX.ap-southeast-2.compute.amazonaws.com\u0026#34;,\r\u0026#34;region\u0026#34;: \u0026#34;ap-southeast-2\u0026#34;\r} S3 1 Click S3 to navigate to the dashboard\n2 Select backupandrestore-uibucket-xxxx-dr.\n3 Click Upload button\n4 Click Add Files button and chose config.json file\n5 At Permissions Section. Enable Specify Individual ACL permissions checkbox. Enable Read as the Everyone (public access)\n6 Enable I understand the effects of these changes on the specified objects. checkbox. Click Upload button\nClick Close button\n7 Click Properties. At Static website hosting, Click Edit button\n8 At Static website hosting click Enable. Enter index.html as the Index document and enter error.html as the Error Document\n9 Click Save changes button\n10 At Static website hosting. Click Bucket website endpoint\nCongratulation! You will see your The Unicorn Shop application in ap-southeast-2 region "
+},
+{
+	"uri": "/3-backupresource/3.3-s3/",
+	"title": "S3",
+	"tags": [],
+	"description": "",
+	"content": "Create S3 UI bucket in secondary Sydney (ap-southeast-2) 1 Click S3 to navigate to the S3 dashboard\n2 Copy name of UI bucket in Singapore (ap-southeast-1) region. It will have prefix backupandrestore-uibucket-xxxx\n3 Click Create bucket button\n4 Enter name of bucket use for UI Bucket that you had copied at step 2 and add \u0026ldquo;-dr\u0026rdquo; at the end\n5 Select Sydney (ap-southeast-2) as the AWS Region\n6 In Object Ownership. Select ACLs enabled\n7 In Block Public Access settings for this bucket section. Disable Block all public access checkbox include children. Enable I acknowledge that the current settings…. checkbox\n8 Click Create Bucket button to create S3 Bucket\n9 After S3 Bucket was created successfully, we will get the result same as below\n"
+},
+{
+	"uri": "/4-copytosecondregion/",
+	"title": "Copy to Secondary Region",
+	"tags": [],
+	"description": "",
+	"content": "Now, We are going to copy our backup resources to the secondary Sydney (ap-southeast-2) region\nWe will perform the following:\n Copy RDS Backup Copy EC2 AMI (Amazon Machine Image)  "
+},
+{
+	"uri": "/5-verifywebsite/",
+	"title": "Verify Website",
+	"tags": [],
+	"description": "",
+	"content": "Primary region 1 Click Cloudformation Stacks to navigate to the dashboard in Singapore (ap-southeast-1) region\n2 Click BackupAndRestore as the Stacks\n3 Click Outputs 4 Click WebsiteURL. We will see The Unicorn Shop -ap-southeast-1 application "
+},
+{
+	"uri": "/6-failovertosecondary/",
+	"title": "Failover to Secondary",
+	"tags": [],
+	"description": "",
+	"content": "When a regional service event affects to Unicorn application in primary region Singapore (ap-southeast-1), we want to bring up resources in the secondary region Sydney (ap-southeast-2).\nWe assume a regional service event has occurred. In this section, we will manually perform a series of tasks to bring up the application in the secondary region N. California (us-west-1). In a production environment, we would automate these steps using an AWS Cloudformation template or third-party tools.\nWe will perform the following:\n Launch a EC2 instancec from AMI (Amazon Machine Image) Restore RDS database from backup Configure the application  Simulating a Regional Service Event We will new simulate a regional service event affecting the S3 static website in Singapore (ap-southeast-1) region that website The Unicorn Shop running\n1 Click S3 to navigate to the dashboard\n2 Click backupandrestore-uibucket-xxxx bucket 3 Click Permissions. At Block public access (bucket settings), click Edit button 4 Enable Block all public access checkbox, then click Save button for saving 5 Enter confirm, then click Confirm button 6 Click Properties 7 At Static website hosting,Click Bucket website endpoint link 8 You will see the 403 Forbidden error "
+},
+{
+	"uri": "/7-cleanup/",
+	"title": "Clean up Resources",
+	"tags": [],
+	"description": "",
+	"content": "Amazon S3 1 Click S3 to navigate to the dashboard\n2 Select the bucket with prefix backupandrestore-uibucket-xxxx and click Empty button\n3 Enter permanently delete into the confirmation box and then click Empty button\n4 Wait until you see the green banner across the top of the page, indicating the bucket is empty. Then click Exit button\nRepeat from step 1.1 to step 1.4 with the bucket have prefix backupandrestore-uibucket-xxxx-dr\n\rAmazon CloudFormation 1 Click CloudFormation to navigate to the dashboard in Singapore - (ap-southeast-1) region\n2 Select BackupAndRestore stack and click Delete button\n3 Click Delete stack button to confirm\nAWS Backup 1 Click AWS Backup to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Click Backup Vaults and clickDefault\n3 Select all of backups and click Actions, then click Delete\n4 Click Confirm button\nRepeat form step 3.1 to step 3.3 for AWS Backup in Singapore - (ap-southeast-1) region\n\rAmazon RDS 1 Click RDS to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Select backupandrestore-secondary-region database. Click Actions, then click Delete\n3 Disable Create final snapshot and Retain automated backups checkbox. Next, enable I acknowledgement … checkbox. Enter delete me into the confirmation box. Click Delete button\nAmazon EC2 1 Click EC2 to navigate to the dashboard in Sydney - (ap-southeast-2) region\n2 Select instance with Name is BackupAndRestoreSecondary and click Instance State, then click Terminate instance.\n3 Click AMIs and select AMI with AMI Name is BackupAndRestoreImage. Click Actions and click Deregister AMI\n4 Click Deregister AMI buton\n5 Click Security groups. Select all of created security groups backupandrestore-ap-southeast-ec2-SG and backupandrestore-ap-southeast-rds-SG. Click Actions and click Delete security groups\n6 Click Delete button\nRepeat from step 5.4 to step 5.6 for EC2 in Singapore - (ap-southeast-1) region\n\r"
+},
+{
+	"uri": "/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

@@ -1,0 +1,141 @@
+[
+{
+	"uri": "/vi/6-failovertosecondary/6.1-ec2/",
+	"title": "EC2",
+	"tags": [],
+	"description": "",
+	"content": "Triển khai một máy chủ EC2 từ AMI (Amazon Machine Image) 1 Nhấn EC2 để chuyển hướng đến trang chủ trong region Sydney - (ap-southeast-2)\n2 Nhấn AMIs\n3 Xác định trạng thái của BackupAndRestoreImage là Available\n4 Chọn BackupAndRestoreImage. Nhấn nút Launch instance from AMI\n5 Chọn loại máy chủ t2.micro, sau đó nhấn nút Next: Configure Instance Details\n6 Chọn BackupAndRestore-S3InstanceProfile-xxxx ở phần IAM Role, sau đó nhấn nút Next: Add Storage\n7 Nhấn nút Next: Add tags\n8 Thêm Name trong mục Key và BackupAndRestoreSecondary trong mục Value, sau đó nhấn nút Next: Configure Security Group\n9 Chọn Create a new security group và nhập backupandrestore-ap-southeast-ec2-SG trong mục Security group name và Description. Thêm các quy tắc như bên dưới bằng việc nhấn nút Add Rule. Sau đó nhấn nút Review and Launch\n10 Nhấn nút launch\n11 Chọn Proceed without a key pair, chọn ô I acknowledge that without a key pair,…, sau đó nhấn nút Lauch Instances\nSao chép Public IPv4 DNS của máy chủ. Chúng ta sẽ sử dụng ở các bước sau\n\r"
+},
+{
+	"uri": "/vi/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "Ứng dụng mẫu là Unishop. Nó là một ứng dụng Spring Boot Java kết nối tới một CSDL MySQL với một frontend được viết bằng Bootstrap. Ứng dụng này được triển khai trên một EC2 Instance (t3.small) với một VPC chuyên dụng sử dụng một Public Subnet. Lưu ý rằng đây không phải là một kiến trúc cơ sở hạ tầng lý tưởng để chạy sản phẩm ứng dụng sẵn sàng cao nhưng đủ đáp ứng cho bài thực hành này.\nĐể cấu hình một hạ tầng và triển khai một ứng dụng, chúng ta sẽ sử dụng Cloudformation. Cloudformation là một cách thức dễ dàng để tăng tốc việc cung cấp cloud với hạ tầng là mã code (Infrastructure as Code - IaC).\nChúng ta sẽ bắt đầu triển khai Unishop đến ap-southeast-1 AWS Region và xác định chức năng. Sau đó sử dụng một EC2 AMI và AWS Backup để tạo những bản sao của máy chủ ứng dụng và cơ sở dữ liệu đến ap-southeast-2 region. Cuối cùng, chúng ta sẽ sử dụng các bản sao để tạo và kiểm tra một ứng dụng đầy đủ chức năng trong ap-southeast-2 region.\n"
+},
+{
+	"uri": "/vi/3-backupresource/3.1-rds/",
+	"title": "RDS",
+	"tags": [],
+	"description": "",
+	"content": "Sao lưu cơ sở dữ liệu RDS 1 Click AWS Backup để chuyển hướng đến trang chủ của AWS Backup ở Region Singapore (ap-southeast-1)\n2 Click chọn Protected resources, sau đó cilck chọn nút Create an on-demand backup\n3 Lựa chọn RDS ở mục Resource type, sau đó chọn unishopappv1dbbackupandrestore (RDS Database đã được tạo bằng Cloudformation ở phần Region chính) ở mục Database name. Nhấn nút Create on-demand backup để bắt đầu khởi tạo\nNếu gặp lỗi, hãy LẶP LẠI từ bước 1.1 đến 1.3 ở trên và chắc chắn rằng bạn bắt đầu từ bước 1.1\n\r4 Sau đó bản sao lưu cơ sở dữ liệu sẽ được tạo\nQuá trình này mất ít nhất 10 phút để hoàn thành\n\r5 Sau khi quá trình sao lưu hoàn tất, chúng ta sẽ thu được kết quả như bên dưới\n"
+},
+{
+	"uri": "/vi/4-copytosecondregion/4.1-rds/",
+	"title": "RDS",
+	"tags": [],
+	"description": "",
+	"content": "Sao chép RDS Backup 1 Click chọn AWS Backup để chuyển hướng vào trang chủ ở region Singapore (ap-southeast-1)\n2 Chọn Backup Vaults, sau đó chọn Default 3 Trong phần Backups, chọn bản sao lưu vừa được tạo. Sau đó nhấn Copy ở mục Actions Nếu không tìm thấy mục bản sao lưu, kiểm tra trạng thái của Backup Job. Chọn Jobs, sau đó chọn Backup Jobs. Xác nhận Status bản sao lưu của bạn là Completed \r4 Chọn Sydney (ap-southeast-2) tại mục Copy to destination, sau đó nhấn nút Copy 5 Quá trình sao chép bản sao lưu từ region Singapore (ap-southeast-1) sang region Sydney (ap-southeast-2) đang được khởi tạo Quá trình này mất khoảng 10 phút để hoàn thành\n\r6 Để kiểm tra kết quả, ta thực hiện:\n Chuyển hướng đến AWS Backup trên region Sydney (ap-southeast-2) Vào phần Backup vaults, chọn Backup vaults là Default  Ở mục Backups chúng ta sẽ thấy bản sao lưu được sao chép từ region Singapore (ap-southeast-1)   "
+},
+{
+	"uri": "/vi/",
+	"title": "Sao lưu và phục hồi",
+	"tags": [],
+	"description": "",
+	"content": "Sao lưu và phục hồi Tổng quan Trong bài lab này, chúng ta sẽ triển khai ứng dụng trong một AWS Region và sau đó sử dụng AWS Backup và EC2 AMIs để tạo một bản backup của cửa hàng chúng ta ở một Region khác. Chúng ta sẽ khám phá DR bằng việc mô phỏng một thảm họa trong Region chính và phục hồi ứng dụng trong Region backup. Module này sẽ mất khoảng 90 phút để hoàn thành\nNội dung  Giới thiệu Các bước chuẩn bị Sao lưu tài nguyên Sao chép sang Region thứ hai Kiểm tra Website Dự phòng sang Region thứ hai Dọn dẹp tài nguyên  "
+},
+{
+	"uri": "/vi/2-pre-requisites/2.1-s3-access/",
+	"title": "Truy cập S3",
+	"tags": [],
+	"description": "",
+	"content": "1 Click S3 để chuyển hướng đến trang chủ S3\n2 Click vào mục Block Public Access settings for this account\nNếu không tìm thấy mục Block Public Access settings for this account ở trang chủ S3, nhấn chọn ở góc bên trái màn hình \r3 Nếu bạn thấy rằng Block all public access đang ở chế độ On, thì hãy bấm nút Edit\nNếu bạn thấy rằng Block all public access đang ở chế độ Off, bạn có thể bỏ qua các bước phía dưới và bắt đầu phần Region chính \r4 Tắt chọn ô Block Public Access settings for this account bao gồm cả các ô nhỏ, sau đó bấm Save change để lưu\n5 Nhập confirm và nhấn nút confirm để xác nhận\n6 Sau đó sẽ nhận được kết quả bên dưới, các Block Public Access settings for this account đã Disable\n"
+},
+{
+	"uri": "/vi/2-pre-requisites/",
+	"title": "Các bước chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "Nếu bạn đang sử dụng tài khoản AWS cá nhân, bạn sẽ phải một khoảng chi phí cho việc triển khai tài nguyên ở bài lab này. Sau khi kết thúc, hoàn thành phần Dọn dẹp tài nguyên để loại bỏ những tài nguyên AWS không cần thiết\n"
+},
+{
+	"uri": "/vi/3-backupresource/3.2-ec2/",
+	"title": "EC2",
+	"tags": [],
+	"description": "",
+	"content": "Tạo một AMI (Amazon Machine Image) Nếu máy chủ EC2 chứa dữ liệu ứng dụng, việc tạo kế hoạch sao lưu định kỳ để đạt mục tiêu RPO là rất cần thiết. AWS Backup có khả năng thực hiện điều này thông qua giao diện giúp dễ dàng để kiểm tra hoạt động sao lưu và phục hồi thông qua dịch vụ AWS. Bởi vì máy chủ của chúng ta không chứa dữ liệu, chỉ có code, chúng ta sẽ tạo một bản sao lưu một lần.\nCác bản sao lưu định kỳ rất cần thiết cho một sản phẩm ứng dụng một khi có một thay đổi xảy đến máy chủ EC2.\n1 Click EC2 để chuyển hướng đến trang chủ EC2 ở region Singapore (ap-southeast-1)\n2 Click Instances (running)\n3 Chọn UniShopAppV1EC2BackupAndRestore. Click Action -\u0026gt; Images and Templates -\u0026gt; Create image\n4 Nhập BackupAndRestoreImage vào mục Image Name, sau đó click nút Next để khởi tạo\n5 Chọn mục AMI và xem AMI đang được khởi tạo\n6 Sau khi AMI được khởi tạo thành công, chúng ta sẽ thu được kết quả bên dưới\n"
+},
+{
+	"uri": "/vi/4-copytosecondregion/4.2-ec2/",
+	"title": "EC2",
+	"tags": [],
+	"description": "",
+	"content": "Sao chép EC2 AMI (Amazon Machine Image) 1 Nhấn EC2 để chuyển hướng đến trang chủ ở region Singapore (ap-southeast-1)\n2 Chọn AMIs\n3 Xác nhận trạng thái của bản sao lưu BackupAndRestoreImage là Available 4 Chọn BackupAndRestoreImage. Click Copy AMI ở mục Actions 5 Chọn Sydney (ap-southeast-2 ở mục Destination region, sau đó nhấn nút Copy AMI 6 Quá trình sao chép EC2 AMI sẽ được khởi tạo 7 Để kiểm tra kết quả, ta thực hiện:\n Chuyển hướng đến EC2 ở region Sydney (ap-southeast-2) Chọn AMIs và kiểm tra AMI vừa được sao chép sang từ region Singapore (ap-southeast-1)   "
+},
+{
+	"uri": "/vi/6-failovertosecondary/6.2-rds/",
+	"title": "RDS",
+	"tags": [],
+	"description": "",
+	"content": "Khôi phục CSDL RDS 1 Nhấn AWS Backup để chuyển hướng đến trang chủ trong region Sydney - (ap-southeast-2)\n2 Nhấn vào Backup Vaults, sau đó nhấn Default\n3 Trong phần Backups, chọn bản sao lưu. Sau đó nhấn Restore trong mục Actions\nNếu bạn không thấy bản sao lưu, kiểm tra trạng thái của Copy Job. Nhấn AWS Backup để chuyển hướng đến trang chủ trong region Singapore - (ap-southeast-1). Nhấn Jobs, sau đó nhấn Copy jobs. Xác định Status của bản sao lưu là Completed\n\r4 Trong phần Settings, nhập backupandrestore-secondary-region ở mục DB Instance Identifier. Ở phần Network \u0026amp; Security, chọn ap-southeast-1x ở phần Availability zone\n5 Nhấn nút Restore backup\n6 Quá trình khôi phục bản sao RDS đang được tiến hành\nCấu hình Security Group 1 Nhấn VPC để chuyển hướng đến trang chủ trong reigon Sydney - (ap-southeast-2)\n2 Nhấn vào Security Groups, sau đó nhấn nút Create security group\n3 Ở phần Basic details, nhập backupandrestore-ap-southeast-rds-SG tại mục Security group name và Description\n4 Ở phần Inbound Rules, nhấn nút Add rule. Chọn Type là MYSQL/Aurora. Chọn Source là Custom và chọn backupandrestore-us-west-ec2-SG. Việc này sẽ cho phép giao tiếp giữa máy chủ EC2 và máy chủ RDS. Sau đó nhấn nút Create security group\nCấu hình RDS 1 Nhấn RDS để chuyển hướng đến trang chủ trong region Sydney - (ap-southeast-2)\n2 Nhấn chọn DB Instances\n3 Chọn backupandrestore-secondary-region, sau đó nhấn nút Modify\n\rCSDL RDS phải có Status là Available\n\r4 Ở phần Connectivity, chọn Security group là backupandrestore-ap-southeast-rds-SG. Sau đó nhấn nút Continue\n5 Chọn Apply immediately và nhấn nút Apply immediately\n6 Nhấn chọn backupandrestore-secondary-region\nSao chép địa chỉ Endpoint và Port. Chúng ta sẽ sử dụng ở các bước sau.\n\r"
+},
+{
+	"uri": "/vi/2-pre-requisites/2.2-primaryregion/",
+	"title": "Region chính",
+	"tags": [],
+	"description": "",
+	"content": "Triển khai một Amazon CloudFormation Template 1 Tạo ứng dụng trên Region chính Singapore (ap-southeast-1) bằng việc khởi chạy CloudFormation Template này\n2 Nhấn nút Next\n3 Nhấn nút Next\nĐể LatestAmiId ở giá trị mặc định\n\r4 Nhấn nút Next\n5 Cuộn xuống phần cuối của trang, bật chọn ô I acknowledge that AWS CloudFormation might create IAM resources with custom names, sau đó nhấn nút Create stack\n6 Cloudformation đang tạo những tài nguyên cần thiết\nQúa trình này mất ít nhất 15 phút để hoàn thành\n\r7 Sau khi hoàn thành sẽ nhận được kết quả bên dưới\n8 Để kiểm tra ứng dụng đã đươc triển khai, truy cập S3 ở mục Bucket chúng ta sẽ thấy một Bucket có định dạng backupandrestore-uibucket-xxxx\n9 Nhấn chọn Bucketvừa mới tạo, cuộn xuống phần cuối cùng của mục Permission. Sao chép Bucket website endpoint của S3 Bucket vừa tạo\n10 Nhập địa chỉ vừa tạo vào bất kỳ trình duyệt web nào và truy cập. Sau đó sẽ nhận được kết quả bên dưới, ứng dụng The Unicorn Shop đã được tạo tại Region Singapore (ap-southeast-1)\n"
+},
+{
+	"uri": "/vi/6-failovertosecondary/6.3-modifyapplication/",
+	"title": "Cấu hình ứng dụng",
+	"tags": [],
+	"description": "",
+	"content": "EC2 1 Nhấn EC2 để chuyển hướng đến trang chủ trong region Sydney - (ap-southeast-2)\n2 Chọn máy chủ BackupAndRestoreSecondary, sau đó nhấn nút Connect\n3 Chọn Session Manager, sau đó nhấn nút Connect\n4 Sau một lúc, một cửa sổ dòng lệnh sẽ xuất hiện\n5 Hãy kết nối tới CSDL RDS ở region thứ hai Sydney - (ap-southeast-2)\nsudo su ec2-user\rcd /home/ec2-user Thay thế backupandrestore-secondary-region.xxxx.us-west-1.rds.amazonaws.com với địa chỉ Endpoint đã được sao chép từ phần RDS\nsudo mysql -u UniShopAppV1User -P 3306 -pUniShopAppV1Password -h backupandrestore-secondary-region.xxxx.us-west-1.rds.amazonaws.com Nhập show databases\nshow databases; Bạn sẽ thấy kết quả như bên dưới:\n+--------------------+\r| Database |\r+--------------------+\r| information_schema |\r| mysql |\r| performance_schema |\r| sys |\r| unishop |\r+--------------------+\r5 rows in set (0.02 sec) Nhập exit để trở về cửa sổ dòng lệnh\nMySQL [(none)]\u0026gt; exit 6 Mở tệp unishopcfg.sh để chỉnh sửa với nano hoặc vi\nsudo nano unishopcfg.sh 7 Thay thế backupandrestore-secondary-region.xxxx.us-west-1.rds.amazonaws.com bằng địa chỉ Endpoint mà bạn đã sao chép từ phần RDS. Thay đổi AWS_DEFAULT_REGION thành ap-southeast-2. Thay đổi UI_RANDOM_NAME thành tên của S3 Bucket đã tạo ở region Sydney - (ap-southeast-2) (kết thúc bằng ký tự -dr)\n#!/bin/bash\rexport Database=backupandrestore-secondary-region.ctd11hzme0gz.ap-southeast-2.rds.amazonaws.com\rexport DB_ENDPOINT=backupandrestore-secondary-region.ctd11hzme0gz.ap-southeast-2.rds.amazonaws.com\rexport AWS_DEFAULT_REGION=ap-southeast-2\rexport UI_RANDOM_NAME=backupandrestore-uibucket-xbo9p0akmbgb-dr Thoát và lưu lại thay đổi Sau khi chỉnh sửa xong, nhấn tổ hợp phím \u0026ldquo;Ctrl + X\u0026rdquo; -\u0026gt; \u0026ldquo;Y\u0026rdquo; -\u0026gt; \u0026ldquo;Enter\u0026rdquo; để lưu lại và thoát ra\n\r8 Hãy sử dụng câu lệnh source để đọc và thực thi các câu lệnh từ tệp unishopcfg.sh\nsource unishopcfg.sh 9 Hãy sao chép các tệp của ứng dụng đến S3 bucket\nNếu S3 buckets của chúng ta chứa dữ liệu ứng dụng thì chúng ta cần phải lên lịch sao lưu định kỳ để đạt được mục tiêu RPO. Điều này có thể được hoàn thành bởi Cross Region Replication. Bởi vì bucket của chúng ta không chứa dữ liệu, chỉ chứa code, chúng ta sẽ khôi phục các nội dung từ máy chủ EC2\n\rsudo aws s3 cp /home/ec2-user/UniShopUI s3://$UI_RANDOM_NAME/ --recursive --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers 10 Khởi động lại máy chủ EC2 để những thay đổi được áp dụng\nsudo reboot Tạo tệp cấu hình ứng dụng 1 Sử dụng bất kỳ trình chỉnh sửa thông dụng nào, tạo một tệp mới với tên là config.json. Đặt thông số host là EC2 public IPv4 DNS name đã được sao chép ở phần EC2, thêm (‘http://\u0026rsquo;) . Cuối cùng, đặt thông số region là ap-southeast-2\n2 Cuối cùng, config.json sẽ có định dạng giống với mẫu này\n{\r\u0026#34;host\u0026#34;: \u0026#34;http://ec2-XXX-XXX-XXX-XXX.ap-southeast-2.compute.amazonaws.com\u0026#34;,\r\u0026#34;region\u0026#34;: \u0026#34;ap-southeast-2\u0026#34;\r} S3 1 Nhấn S3 để chuyển hướng đến trang chủ\n2 Nhấn chọn backupandrestore-uibucket-xxxx-dr.\n3 Nhấn nút Upload\n4 Nhấn nút Add Files và chọn tệp config.json\n5 Ở phần Permissions Section. Chọn ô Specify Individual ACL permissions. Chọn ô Read ở mục Everyone (public access)\n6 Chọn ô I understand the effects of these changes on the specified objects.. Nhấn nút Upload\nNhấn nút Close\n7 Nhấn chọn Properties. Ở phần Static website hosting, nhấn nút Edit\n8 Ở phần Static website hosting chọn ô Enable. Nhập index.html ở mục Index document và nhập error.html ở mục Error Document\n9 Nhấn nút Save changes\n10 Ở phần Static website hosting. Nhấn chọn Bucket website endpoint\nChúc mừng! Bạn sẽ thấy ứng dụng của bạn The Unicorn Shop ở region ap-southeast-2 "
+},
+{
+	"uri": "/vi/3-backupresource/3.3-s3/",
+	"title": "S3",
+	"tags": [],
+	"description": "",
+	"content": "Tạo S3 UI bucket ở region thứ hai Sydney (ap-southeast-2) 1 Click S3 để chuyển hướng đến trang chủ S3\n2 Sao chép tên của UI bucket ở region Singapore (ap-southeast-1). Nó sẽ có định dạng backupandrestore-uibucket-xxxx\n3 Click nút Create bucket\n4 Nhập tên của bucket sử dụng cho UI Bucket mà bạn đã sao chép ở bước 2 và thêm \u0026ldquo;-dr\u0026rdquo; ở phía sau\n5 Chọn Sydney (ap-southeast-2) ở mục AWS Region\n6 Trong phần Object Ownership. Chọn ACLs enabled\n7 Trong phần Block Public Access settings for this bucket. Bỏ chọn ở ô Block all public access bao gồm tất cả các phần tử con. Nhấn chọn ở ô I acknowledge that the current settings….\n8 Nhấn chọn nút Create Bucket để khởi tạo S3 Bucket\n9 Sau khi S3 Bucket được khởi tạo thành công, chúng ta sẽ nhận được kết quả bên dưới\n"
+},
+{
+	"uri": "/vi/3-backupresource/",
+	"title": "Sao lưu tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Bây giờ chúng ta sẽ bắt đầu sao lưu các tài nguyên\nChúng ta sẽ thực hiện như sau:\n Sao lưu cơ sở dữ liệu RDS Tạo một EC2 AMI (Amazon Machine Image) Tạo một S3 UI bucket mới  Chúng ta sẽ tạo một backup plan cho một sản phẩm ứng dụng và lên kế hoạch sao lưu định kỳ để đạt được mục tiêu RPO.\nTuy nhiên, ở bài lab này, chúng ta sẽ tạo một manual backup (Sao lưu thủ công)\n"
+},
+{
+	"uri": "/vi/4-copytosecondregion/",
+	"title": "Sao chép sang Region thứ hai",
+	"tags": [],
+	"description": "",
+	"content": "Bây giờ, chúng ta sẽ sao chép các tài nguyên sao lưu sang Region thứ hai Sydney (ap-southeast-2)\nChúng ta sẽ thực hiện:\n Sao chép RDS Backup Sao chép EC2 AMI (Amazon Machine Image)  "
+},
+{
+	"uri": "/vi/5-verifywebsite/",
+	"title": "Kiểm tra website",
+	"tags": [],
+	"description": "",
+	"content": "Region chính 1 Nhấn Cloudformation Stacks để chuyển hướng đến trang chủ ở region Singapore (ap-southeast-1)\n2 Chọn BackupAndRestore ở phần Stacks\n3 Chọn Outputs 4 Nhấn vào WebsiteURL. Chúng ta sẽ thấy ứng dụng The Unicorn Shop -ap-southeast-1 "
+},
+{
+	"uri": "/vi/6-failovertosecondary/",
+	"title": "Dự phòng sang Region thứ hai",
+	"tags": [],
+	"description": "",
+	"content": "Khi một sự kiện dịch vụ thuộc khu vực ảnh hướng đến ứng dụng Unicorn ở region chính Singapore (ap-southeast-1), chúng ta muốn khai thác tài nguyên trong region thứ hai Sydney (ap-southeast-2)\nHãy tưởng tượng một sự kiện dịch vụ thuộc khu vực vừa xảy ra. Trong trường hợp này, chúng ta sẽ thực hiện một loạt các tác vụ để khai thác tài nguyên trong region thứ hai Sydney (ap-southeast-2) một cách thủ công. Trong một môi trường sản phẩm, chúng ta sẽ tự động hóa những bước này bằng việc sử dụng một AWS Cloudformation template hoặc công cụ của bên thứ ba.\nChúng ta sẽ thực hiện:\n Triển khai một máy chủ EC2 từ AMI (Amazon Machine Image) Khôi phục cơ sở dữ liêu RDS từ bản sao lưu Cấu hình ứng dụng  Mô phỏng một sự kiện dịch vụ thuộc khu vực Chúng ta sẽ mô phỏng một sự kiện dịch vụ thuộc khu vực ảnh hưởng đến website tĩnh S3 (S3 static website) trong region Singapore (ap-southeast-1) mà website The Unicorn Shop đang chạy\n1 Nhấn S3 để chuyển hướng đến trang chủ\n2 Nhấn vào bucket backupandrestore-uibucket-xxxx 3 Nhấn vào Permissions. Trong phần Block public access (bucket settings), nhấn nút Edit 4 Chọn ô Block all public access, sau đó nhấn nút Save để lưu 5 Nhập confirm, sau đó nhấn nút Confirm 6 Nhấn chọn Properties 7 Trong phần Static website hosting, nhấp vào đường dẫn Bucket website endpoint 8 Bạn sẽ thấy lỗi 403 Forbidden "
+},
+{
+	"uri": "/vi/7-cleanup/",
+	"title": "Dọn dẹp tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Amazon S3 1 Nhấn S3 để chuyển hướng đến trang chủ\n2 Chọn bucket với tiền tố backupandrestore-uibucket-xxxx và nhấn nút Empty\n3 Nhập permanently delete vào ô xác nhận và nhấn nút Empty\n4 Chờ đến khi bạn thấy ô màu xanh lá cây ở phía trên của trang chủ, thể hiện bucket đã rỗng. Sau đó nhấn nút Exit\nThực hiện lặp lại bước 1.1 đến 1.4 đối với bucket có tiền tố backupandrestore-uibucket-xxxx-dr\n\rAmazon CloudFormation 1 Nhấn CloudFormation để chuyển hướng đến trang chủ trong region Singapore - (ap-southeast-1)\n2 Chọn stack BackupAndRestore và nhấn nút Delete\n3 Nhấn nút Delete stack để xác nhận\nAWS Backup 1 Nhấn AWS Backup để chuyển hướng đến trang chủ ở region Sydney - (ap-southeast-2)\n2 Nhấn Backup Vaults và chọn Default\n3 Chọn tất cả bản sao lưu và chọn Actions, sau đó chọn Delete\n4 Nhấn nút Confirm\nThực hiện lặp lại bước 3.1 đến 3.3 cho AWS Backup trong region Singapore - (ap-southeast-1)\n\rAmazon RDS 1 Nhấn RDS để chuyển hướng đến trang chủ ở region Sydney - (ap-southeast-2)\n2 Chọn CSDL backupandrestore-secondary-region. Chọn Actions, sau đó chọn Delete\n3 Bỏ chọn ô Create final snapshot và Retain automated backups. Tiếp theo, chọn ô I acknowledgement …. Nhập delete me vào ô xác nhận. Nhấn nút Delete\nAmazon EC2 1 Nhấn EC2 để chuyển hướng đến trang chủ ở region Sydney - (ap-southeast-2)\n2 Chọn máy chủ có Name là BackupAndRestoreSecondary và nhấn Instance State, sau đó nhấn Terminate instance.\n3 Nhấn AMIs và chọn AMI có AMI Name là BackupAndRestoreImage. Nhấn Actions và chọn Deregister AMI\n4 Nhấn nút Deregister AMI\n5 Nhấn Security groups. Chọn tất cả security groups được tạo backupandrestore-ap-southeast-ec2-SG và backupandrestore-ap-southeast-rds-SG. Nhấn Actions và chọn Delete security groups\n6 Nhấn nút Delete\nThực hiện lặp lại bước 5.4 đến 5.6 cho EC2 trong region Singapore - (ap-southeast-1)\n\r"
+},
+{
+	"uri": "/vi/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/vi/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
