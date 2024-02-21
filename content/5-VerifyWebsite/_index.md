@@ -13,6 +13,6 @@ pre : " <b> 5. </b> "
 2 Click **BackupAndRestore** as the **Stacks**
 
 3 Click **Outputs**
- ![Verify WEbsite](/images/5.verifywebsite/1_VerifyWeb.png?width=90pc)
+ ![Verify WEbsite](../images/5.verifywebsite/1_VerifyWeb.png?width=90pc)
 4 Click **WebsiteURL**. We will see **The Unicorn Shop -ap-southeast-1** application
- ![Verify WEbsite](/images/5.verifywebsite/2_VerifyWeb.png?width=90pc)
+ ![Verify WEbsite](../images/5.verifywebsite/2_VerifyWeb.png?width=90pc)

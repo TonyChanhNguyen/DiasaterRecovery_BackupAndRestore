@@ -22,17 +22,17 @@ We will new simulate a regional service event affecting the S3 static website in
 1 Click [S3](https://s3.console.aws.amazon.com/s3/home?region=ap-southeast-1#) to navigate to the dashboard
 
 2 Click **backupandrestore-uibucket-xxxx** bucket
-   ![Failover to Secondary](/images/6.failovertosecondary/1_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/1_S3Bucket.png?width=90pc)
 3 Click **Permissions**. At **Block public access (bucket settings)**, click ***Edit*** button
-   ![Failover to Secondary](/images/6.failovertosecondary/2_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/2_S3Bucket.png?width=90pc)
 4 Enable **Block all public access** checkbox, then click ***Save*** button for saving
-   ![Failover to Secondary](/images/6.failovertosecondary/3_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/3_S3Bucket.png?width=90pc)
 5 Enter ```confirm```, then click ***Confirm*** button
-   ![Failover to Secondary](/images/6.failovertosecondary/4_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/4_S3Bucket.png?width=90pc)
 6 Click **Properties**
-   ![Failover to Secondary](/images/6.failovertosecondary/5_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/5_S3Bucket.png?width=90pc)
 7 At **Static website hosting**,Click **Bucket website endpoint** link
-   ![Failover to Secondary](/images/6.failovertosecondary/6_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/6_S3Bucket.png?width=90pc)
 8 You will see the **403 Forbidden** error
-   ![Failover to Secondary](/images/6.failovertosecondary/7_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../images/6.failovertosecondary/7_S3Bucket.png?width=90pc)
 

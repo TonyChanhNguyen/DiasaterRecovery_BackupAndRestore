@@ -12,15 +12,15 @@ pre : " <b> 6.3 </b> "
 
 2 Chọn máy chủ **BackupAndRestoreSecondary**, sau đó nhấn nút ***Connect***
 
- ![Modify Application](/images/6.failovertosecondary/31_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/31_ModifyApp.png?width=90pc)
 
 3 Chọn **Session Manager**, sau đó nhấn nút ***Connect***
 
- ![Modify Application](/images/6.failovertosecondary/32_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/32_ModifyApp.png?width=90pc)
 
 4 Sau một lúc, một cửa sổ dòng lệnh sẽ xuất hiện
 
- ![Modify Application](/images/6.failovertosecondary/33_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/33_ModifyApp.png?width=90pc)
 
 5 Hãy kết nối tới CSDL RDS ở region thứ hai **Sydney - (ap-southeast-2)**
 ```
@@ -117,43 +117,43 @@ sudo reboot
 
 2 Nhấn chọn **backupandrestore-uibucket-xxxx-dr.**
 
- ![Modify Application](/images/6.failovertosecondary/34_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/34_ModifyApp.png?width=90pc)
 
 3 Nhấn nút ***Upload***
 
- ![Modify Application](/images/6.failovertosecondary/35_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/35_ModifyApp.png?width=90pc)
 
 4 Nhấn nút ***Add Files*** và chọn tệp **config.json**
 
- ![Modify Application](/images/6.failovertosecondary/36_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/36_ModifyApp.png?width=90pc)
 
 5 Ở phần **Permissions Section**. Chọn ô **Specify Individual ACL permissions**. Chọn ô **Read** ở mục **Everyone (public access)**
 
- ![Modify Application](/images/6.failovertosecondary/37_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/37_ModifyApp.png?width=90pc)
 
 6 Chọn ô **I understand the effects of these changes on the specified objects.**. Nhấn nút ***Upload***
 
- ![Modify Application](/images/6.failovertosecondary/38_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/38_ModifyApp.png?width=90pc)
 
 Nhấn nút ***Close***
 
 7 Nhấn chọn **Properties**. Ở phần **Static website hosting**, nhấn nút ***Edit***
 
- ![Modify Application](/images/6.failovertosecondary/39_ModifyApp.png?width=90pc)
- ![Modify Application](/images/6.failovertosecondary/40_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/39_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/40_ModifyApp.png?width=90pc)
 
 8 Ở phần **Static website hosting** chọn ô **Enable**. Nhập ```index.html``` ở mục **Index document** và nhập ```error.html``` ở mục **Error Document**
 
- ![Modify Application](/images/6.failovertosecondary/41_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/41_ModifyApp.png?width=90pc)
 
 9 Nhấn nút ***Save changes***
 
- ![Modify Application](/images/6.failovertosecondary/42_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/42_ModifyApp.png?width=90pc)
 
 10 Ở phần **Static website hosting**. Nhấn chọn **Bucket website endpoint**
 
- ![Modify Application](/images/6.failovertosecondary/43_ModifyApp.png?width=90pc)
- ![Modify Application](/images/6.failovertosecondary/44_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/43_ModifyApp.png?width=90pc)
+ ![Modify Application](../../../images/6.failovertosecondary/44_ModifyApp.png?width=90pc)
 
 #### Chúc mừng! Bạn sẽ thấy ứng dụng của bạn The Unicorn Shop ở region ap-southeast-2
 

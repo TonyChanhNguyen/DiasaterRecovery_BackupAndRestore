@@ -16,20 +16,20 @@ Reoccurring backups are necessary for a production application every time a chan
 
 2 Click **Instances (running)**
 
- ![EC2](/images/3.backupresources/5_EC2Dashboard.png?width=90pc)
+ ![EC2](../../images/3.backupresources/5_EC2Dashboard.png?width=90pc)
 
 3 Select **UniShopAppV1EC2BackupAndRestore**. Click ***Action* ->** ***Images and Templates* ->** ***Create image***
 
-  ![EC2](/images/3.backupresources/6_AIMCreate.png?width=90pc)
+  ![EC2](../../images/3.backupresources/6_AIMCreate.png?width=90pc)
 
 4 Enter ```BackupAndRestoreImage``` as the **Image Name**, then click ***Next*** button to create
 
-  ![EC2](/images/3.backupresources/7_AIMCreating.png?width=90pc)
+  ![EC2](../../images/3.backupresources/7_AIMCreating.png?width=90pc)
 
 5 Select **AMI** and see AMI creating
 
-  ![EC2](/images/3.backupresources/8_AIMCreating_1.png?width=90pc)
+  ![EC2](../../images/3.backupresources/8_AIMCreating_1.png?width=90pc)
 
 6 After **AMI** was created successfully, we will get the result same as below
 
-  ![EC2](/images/3.backupresources/9_AIMCreated.png?width=90pc)
+  ![EC2](../../images/3.backupresources/9_AIMCreated.png?width=90pc)

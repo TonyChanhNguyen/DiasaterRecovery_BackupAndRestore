@@ -12,15 +12,15 @@ pre : " <b> 6.3 </b> "
 
 2 Select **BackupAndRestoreSecondary** instance, then click ***Connect*** button
 
- ![Modify Application](/images/6.failovertosecondary/31_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/31_ModifyApp.png?width=90pc)
 
 3 Click **Session Manager**, then click ***Connect*** button
 
- ![Modify Application](/images/6.failovertosecondary/32_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/32_ModifyApp.png?width=90pc)
 
 4 After a second, a terminal will appear
 
- ![Modify Application](/images/6.failovertosecondary/33_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/33_ModifyApp.png?width=90pc)
 
 5 Let's connect to RDS database in secondary reggion **Sydney - (ap-southeast-2)**
 ```
@@ -117,43 +117,43 @@ sudo reboot
 
 2 Select **backupandrestore-uibucket-xxxx-dr.**
 
- ![Modify Application](/images/6.failovertosecondary/34_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/34_ModifyApp.png?width=90pc)
 
 3 Click ***Upload*** button
 
- ![Modify Application](/images/6.failovertosecondary/35_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/35_ModifyApp.png?width=90pc)
 
 4 Click ***Add Files*** button and chose **config.json** file
 
- ![Modify Application](/images/6.failovertosecondary/36_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/36_ModifyApp.png?width=90pc)
 
 5 At **Permissions Section**. Enable **Specify Individual ACL permissions** checkbox. Enable **Read** as the **Everyone (public access)**
 
- ![Modify Application](/images/6.failovertosecondary/37_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/37_ModifyApp.png?width=90pc)
 
 6 Enable **I understand the effects of these changes on the specified objects.** checkbox. Click ***Upload*** button
 
- ![Modify Application](/images/6.failovertosecondary/38_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/38_ModifyApp.png?width=90pc)
 
 Click ***Close*** button
 
 7 Click **Properties**. At **Static website hosting**, Click ***Edit*** button
 
- ![Modify Application](/images/6.failovertosecondary/39_ModifyApp.png?width=90pc)
- ![Modify Application](/images/6.failovertosecondary/40_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/39_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/40_ModifyApp.png?width=90pc)
 
 8 At **Static website hosting** click **Enable**. Enter ```index.html``` as the **Index document** and enter ```error.html``` as the **Error Document**
 
- ![Modify Application](/images/6.failovertosecondary/41_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/41_ModifyApp.png?width=90pc)
 
 9 Click ***Save changes*** button
 
- ![Modify Application](/images/6.failovertosecondary/42_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/42_ModifyApp.png?width=90pc)
 
 10 At **Static website hosting**. Click **Bucket website endpoint**
 
- ![Modify Application](/images/6.failovertosecondary/43_ModifyApp.png?width=90pc)
- ![Modify Application](/images/6.failovertosecondary/44_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/43_ModifyApp.png?width=90pc)
+ ![Modify Application](../../images/6.failovertosecondary/44_ModifyApp.png?width=90pc)
 
 #### Congratulation! You will see your The Unicorn Shop application in ap-southeast-2 region
 

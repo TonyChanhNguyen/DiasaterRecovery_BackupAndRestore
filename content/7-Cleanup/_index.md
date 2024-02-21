@@ -12,15 +12,15 @@ pre : " <b> 7. </b> "
 
 2 Select the bucket with prefix **backupandrestore-uibucket-xxxx** and click ***Empty*** button
 
- ![Cleanup](/images/7.cleanup/1_S3Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/1_S3Clean.png?width=90pc)
 
 3 Enter ```permanently delete``` into the confirmation box and then click ***Empty*** button
 
- ![Cleanup](/images/7.cleanup/2_S3Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/2_S3Clean.png?width=90pc)
 
 4 Wait until you see the green banner across the top of the page, indicating the bucket is empty. Then click ***Exit*** button
 
- ![Cleanup](/images/7.cleanup/3_S3Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/3_S3Clean.png?width=90pc)
 
 {{% notice note %}}
 Repeat from step **1.1** to step **1.4** with the bucket have prefix ```backupandrestore-uibucket-xxxx-dr```
@@ -32,11 +32,11 @@ Repeat from step **1.1** to step **1.4** with the bucket have prefix ```backupan
 
 2 Select **BackupAndRestore** stack and click ***Delete*** button
 
- ![Cleanup](/images/7.cleanup/4_CloudformationClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/4_CloudformationClean.png?width=90pc)
 
 3 Click ***Delete stack*** button to confirm
 
- ![Cleanup](/images/7.cleanup/5_CloudformationClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/5_CloudformationClean.png?width=90pc)
 
 ### AWS Backup 
 
@@ -44,15 +44,15 @@ Repeat from step **1.1** to step **1.4** with the bucket have prefix ```backupan
 
 2 Click **Backup Vaults** and click**Default**
 
- ![Cleanup](/images/7.cleanup/6_BackupClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/6_BackupClean.png?width=90pc)
 
 3 Select all of backups and click **Actions**, then click **Delete**
 
- ![Cleanup](/images/7.cleanup/7_BackupClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/7_BackupClean.png?width=90pc)
 
 4 Click ***Confirm*** button
 
- ![Cleanup](/images/7.cleanup/8_BackupClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/8_BackupClean.png?width=90pc)
 
 {{% notice note %}}
 Repeat form step **3.1** to step **3.3** for [AWS Backup](https://ap-southeast-1.console.aws.amazon.com/backup/home?region=ap-southeast-1#/)
@@ -65,11 +65,11 @@ Repeat form step **3.1** to step **3.3** for [AWS Backup](https://ap-southeast-1
 
  2 Select **backupandrestore-secondary-region** database. Click **Actions**, then click **Delete**
 
- ![Cleanup](/images/7.cleanup/9_RDSClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/9_RDSClean.png?width=90pc)
 
  3 Disable **Create final snapshot** and **Retain automated backups** checkbox. Next, enable **I acknowledgement …** checkbox. Enter ```delete me``` into the confirmation box. Click ***Delete*** button
 
- ![Cleanup](/images/7.cleanup/10_RDSClean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/10_RDSClean.png?width=90pc)
 
  ### Amazon EC2
 
@@ -77,19 +77,19 @@ Repeat form step **3.1** to step **3.3** for [AWS Backup](https://ap-southeast-1
 
  2 Select instance with **Name** is **BackupAndRestoreSecondary** and click **Instance State**, then click **Terminate instance.**
 
- ![Cleanup](/images/7.cleanup/11_EC2Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/11_EC2Clean.png?width=90pc)
 
  3 Click **AMIs** and select **AMI** with **AMI Name** is **BackupAndRestoreImage**. Click **Actions** and click **Deregister AMI**
 
- ![Cleanup](/images/7.cleanup/12_EC2Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/12_EC2Clean.png?width=90pc)
 
  4 Click ***Deregister AMI*** buton
 
- ![Cleanup](/images/7.cleanup/13_EC2Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/13_EC2Clean.png?width=90pc)
 
  5 Click **Security groups**. Select all of created **security groups**  **backupandrestore-ap-southeast-ec2-SG** and **backupandrestore-ap-southeast-rds-SG**. Click **Actions** and click **Delete security groups**
 
- ![Cleanup](/images/7.cleanup/14_EC2Clean.png?width=90pc)
+ ![Cleanup](../images/7.cleanup/14_EC2Clean.png?width=90pc)
 
  6 Click ***Delete*** button
 

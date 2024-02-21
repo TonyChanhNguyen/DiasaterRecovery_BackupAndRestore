@@ -16,20 +16,20 @@ Các bản sao lưu định kỳ rất cần thiết cho một sản phẩm ứn
 
 2 Click **Instances (running)**
 
- ![EC2](/images/3.backupresources/5_EC2Dashboard.png?width=90pc)
+ ![EC2](../../../images/3.backupresources/5_EC2Dashboard.png?width=90pc)
 
 3 Chọn **UniShopAppV1EC2BackupAndRestore**. Click ***Action* ->** ***Images and Templates* ->** ***Create image***
 
-  ![EC2](/images/3.backupresources/6_AIMCreate.png?width=90pc)
+  ![EC2](../../../images/3.backupresources/6_AIMCreate.png?width=90pc)
 
 4 Nhập ```BackupAndRestoreImage``` vào mục **Image Name**, sau đó click nút ***Next*** để khởi tạo
 
-  ![EC2](/images/3.backupresources/7_AIMCreating.png?width=90pc)
+  ![EC2](../../../images/3.backupresources/7_AIMCreating.png?width=90pc)
 
 5 Chọn mục **AMI** và xem AMI đang được khởi tạo 
 
-  ![EC2](/images/3.backupresources/8_AIMCreating_1.png?width=90pc)
+  ![EC2](../../../images/3.backupresources/8_AIMCreating_1.png?width=90pc)
 
 6 Sau khi **AMI** được khởi tạo thành công, chúng ta sẽ thu được kết quả bên dưới
 
-  ![EC2](/images/3.backupresources/9_AIMCreated.png?width=90pc)
+  ![EC2](../../../images/3.backupresources/9_AIMCreated.png?width=90pc)

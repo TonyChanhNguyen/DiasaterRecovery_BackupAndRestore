@@ -21,17 +21,17 @@ Chúng ta sẽ mô phỏng một sự kiện dịch vụ thuộc khu vực ảnh
 1 Nhấn [S3](https://s3.console.aws.amazon.com/s3/home?region=ap-southeast-1#) để chuyển hướng đến trang chủ
 
 2 Nhấn vào bucket **backupandrestore-uibucket-xxxx**
-   ![Failover to Secondary](/images/6.failovertosecondary/1_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/1_S3Bucket.png?width=90pc)
 3 Nhấn vào **Permissions**. Trong phần **Block public access (bucket settings)**, nhấn nút ***Edit***
-   ![Failover to Secondary](/images/6.failovertosecondary/2_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/2_S3Bucket.png?width=90pc)
 4 Chọn ô **Block all public access**, sau đó nhấn nút ***Save*** để lưu
-   ![Failover to Secondary](/images/6.failovertosecondary/3_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/3_S3Bucket.png?width=90pc)
 5 Nhập ```confirm```, sau đó nhấn nút ***Confirm***
-   ![Failover to Secondary](/images/6.failovertosecondary/4_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/4_S3Bucket.png?width=90pc)
 6 Nhấn chọn **Properties**
-   ![Failover to Secondary](/images/6.failovertosecondary/5_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/5_S3Bucket.png?width=90pc)
 7 Trong phần **Static website hosting**, nhấp vào đường dẫn **Bucket website endpoint**
-   ![Failover to Secondary](/images/6.failovertosecondary/6_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/6_S3Bucket.png?width=90pc)
 8 Bạn sẽ thấy lỗi **403 Forbidden**
-   ![Failover to Secondary](/images/6.failovertosecondary/7_S3Bucket.png?width=90pc)
+   ![Failover to Secondary](../../images/6.failovertosecondary/7_S3Bucket.png?width=90pc)
 

@@ -13,6 +13,6 @@ pre : " <b> 5. </b> "
 2 Chọn **BackupAndRestore** ở phần **Stacks**
 
 3 Chọn **Outputs**
- ![Verify WEbsite](/images/5.verifywebsite/1_VerifyWeb.png?width=90pc)
+ ![Verify WEbsite](../../images/5.verifywebsite/1_VerifyWeb.png?width=90pc)
 4 Nhấn vào **WebsiteURL**. Chúng ta sẽ thấy ứng dụng **The Unicorn Shop -ap-southeast-1**
- ![Verify WEbsite](/images/5.verifywebsite/2_VerifyWeb.png?width=90pc)
+ ![Verify WEbsite](../../images/5.verifywebsite/2_VerifyWeb.png?width=90pc)
